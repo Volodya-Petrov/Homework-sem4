@@ -1,4 +1,12 @@
 
+let factorial number =
+    let rec factorialHelper acc i number =
+        if i >= number then
+            acc * i
+        else
+            factorialHelper (acc * i) (i + 1) number
+    factorialHelper 1 1 number
 
-// For more information see https://aka.ms/fsharp-console-apps
-printfn "Hello from F#"
+
+let x = factorial 0 
+printfn "%i" x      
