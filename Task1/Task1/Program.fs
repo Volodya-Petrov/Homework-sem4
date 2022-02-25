@@ -41,14 +41,17 @@ let generateList n m =
         if degree <= 0 then
             element
         else
-            pow (element * 2) (degree - 1)
-    let firstElement = pow 1 n
+            pow (element * 2.0) (degree - 1)
+    let firstElement = pow 1.0 (abs n)
     let rec generateListHelper i list =
         if i = 0 then
             list
         else
-            generateListHelper (i - 1) (((List.head list) * 2)::list)
-    reverse (generateListHelper (m - n) [firstElement])
+            generateListHelper (i - 1) (((List.head list) * 2.0)::list)
+    if n >= 0 then
+        List.rev (generateListHelper (m - n) [firstElement])
+    else
+        List.rev (generateListHelper (m - n) [1.0 / firstElement])
     
-let x = generateList 0 5
+let x = generateList -2 0
 printfn "%A" x    
