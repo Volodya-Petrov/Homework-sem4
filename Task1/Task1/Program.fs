@@ -3,16 +3,16 @@ open System
 /// Считает факториал числа
 let factorial number =
     if number < 0 then failwith "Число должно быть не меньше нуля" 
-    let rec factorialHelper acc i number =
+    let rec factorialHelper acc i =
         if i >= number then
             acc * i
         else
-            factorialHelper (acc * i) (i + 1) number
-    factorialHelper 1 1 number
+            factorialHelper (acc * i) (i + 1)
+    factorialHelper 1 1
 
 /// Выдает число фибоначчи с номером "number"
 let fibonacci number =
-    if number < 0 then failwith "Число должно быть не меньше нуля" 
+    if number <= 0 then failwith "Число должно быть больше нуля" 
     let rec fibonacciHelper acc1 acc2 i =
         if i >= number then
             acc1
@@ -45,5 +45,5 @@ let rec generateList n m =
         generateListHelper (i - 1) (((List.head list) * 2.0)::list)
     List.rev (generateListHelper (m - n) [pown 2.0 n])
     
-let x = generateList 4 2
-printfn "%A" x    
+let x = fibonacci 0
+printfn "%i" x    
