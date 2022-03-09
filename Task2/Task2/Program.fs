@@ -1,9 +1,10 @@
+module Program
 
-let countEvenNumbers1 = List.fold (fun acc elem -> acc + (elem + 1) % 2) 0
+let countEvenNumbers1 ls = ls |> List.fold (fun acc elem -> acc + abs((elem + 1) % 2)) 0
 
 let countEvenNumbers2 ls = ls |> List.filter (fun x -> x % 2 = 0) |> List.length
 
-let countEvenNumbers3 ls = ls |> List.map (fun x -> (x + 1) % 2) |> List.sum 
+let countEvenNumbers3 ls = ls |> List.map (fun x -> abs((x + 1) % 2)) |> List.sum 
 
 
 
@@ -44,13 +45,6 @@ let generatePrimeNums =
         }
     primeNumbers 2
             
-let rec printTree tree =
-    match tree with
-    | Tree(value, left, right) -> printTree left; printfn "%i" value; printTree right;
-    | Tip(value) -> printfn "%i" value
-let tree1 = Tree(5, Tree(2, Tip(4), Tip(3)), Tip(6))
-let tree2 = ParseTree(Value(3), ParseTree(Value(4), Value(5), (*)), (+))
 
-
-let a = [ for i in 0 .. 9 -> Seq.item i generatePrimeNums ]
-printfn "%A" a
+let a = countEvenNumbers1 [-2]
+printfn "%A"
