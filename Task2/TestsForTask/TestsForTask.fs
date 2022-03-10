@@ -37,5 +37,12 @@ let ParseTreeTest () =
     calculateParseTree tree |> should equal 23
     
 
+[<Test>]
+let primeNumsTest () =
+    let first5PrimeNums = [ for i in 0 .. 4 -> Seq.item i (generatePrimeNums()) ]
+
+    first5PrimeNums |> should equal [ 2; 3; 5; 7; 11]
+    
+
     
          

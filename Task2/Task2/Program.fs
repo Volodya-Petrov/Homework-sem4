@@ -1,9 +1,12 @@
 module Program
 
+/// Считает количество четных числе в списке
 let countEvenNumbers1 ls = ls |> List.fold (fun acc elem -> acc + abs((elem + 1) % 2)) 0
 
+/// Считает количество четных числе в списке
 let countEvenNumbers2 ls = ls |> List.filter (fun x -> x % 2 = 0) |> List.length
 
+/// Считает количество четных числе в списке
 let countEvenNumbers3 ls = ls |> List.map (fun x -> abs((x + 1) % 2)) |> List.sum 
 
 
@@ -12,6 +15,7 @@ type Tree<'a> =
     | Tree of 'a * Tree<'a> * Tree<'a>
     | Tip of 'a
 
+/// Применяет полученные функцию ко всем элементам дерева и возвращает новое дерево
 let rec createNewTree func tree =
     match tree with
     | Tree(value, left, right) -> Tree(func value, createNewTree func left, createNewTree func right)
@@ -23,12 +27,14 @@ type ParseTree<'a> =
     | Value of 'a
     | ParseTree of ParseTree<'a> * ParseTree<'a> * BinOperation<'a>
     
+/// Считает результат выражения записанного с помощью дерева разбора
 let rec calculateParseTree tree =
     match tree with
     | Value(value) -> value
     | ParseTree(left, right, operator) -> operator (calculateParseTree left) (calculateParseTree right)
 
-let generatePrimeNums =
+/// Генерирует бесконечную последовательность простых чисел
+let generatePrimeNums () =
     let rec isPrime n acc =
         if acc = (int (sqrt (float n)) + 1) then
             true
