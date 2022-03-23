@@ -33,4 +33,8 @@ let rec betaReduction term =
     | Application (LambdaAbstraction (var, termInLambda), termForSubstitution) ->
         let newTerm = substitution termInLambda termForSubstitution var
         betaReduction newTerm
-    | Application (term1, term2) -> Application(betaReduction term1, betaReduction term2)
+    | Application (term1, term2) ->
+        let term1AfterReduction = betaReduction term1 
+        match term1AfterReduction with
+        | LambdaAbstraction (_, _) -> betaReduction (Application(term1AfterReduction, term2))
+        | _ -> Application(term1AfterReduction, betaReduction term2)
