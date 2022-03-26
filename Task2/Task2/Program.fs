@@ -16,9 +16,9 @@ type Tree<'a> =
     | Tip of 'a
 
 /// Применяет полученные функцию ко всем элементам дерева и возвращает новое дерево
-let rec createNewTree func tree =
+let rec mapTree func tree =
     match tree with
-    | Tree(value, left, right) -> Tree(func value, createNewTree func left, createNewTree func right)
+    | Tree(value, left, right) -> Tree(func value, mapTree func left, mapTree func right)
     | Tip(value) -> Tip(func value)
 
 type BinOperation<'a> = 'a -> 'a -> 'a

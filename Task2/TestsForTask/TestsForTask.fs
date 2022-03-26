@@ -22,19 +22,18 @@ let countEvenNumbersTest () =
     countEvenNumbers1 [1; 2; 3; 4; 5; 6; 7; 8] |> should equal 4
     
 [<Test>]
-let createNewTreeTest () =
-    let rec traverseTree tree ls =
-        match tree with
-        | Tree(value, left, right) -> (traverseTree right ls) @ (value :: (traverseTree left ls)) 
-        | Tip(value) ->  value :: ls
-    
+let mapTreeTest () =
     let tree = Tree(5, Tree(2, Tip(4), Tip(3)), Tip(6))
-    traverseTree tree [] |> should equal (List.rev [4; 2; 3; 5; 6])
+    mapTree (fun x -> x + 1) tree |> should equal (Tree(6, Tree(3, Tip(5), Tip(4)), Tip(7)))
     
 [<Test>]
 let ParseTreeTest () =
-    let tree = ParseTree(Value(3), ParseTree(Value(4), Value(5), (*)), (+))
-    calculateParseTree tree |> should equal 23
+    let tree1 = ParseTree(Value(3), ParseTree(Value(4), Value(5), (*)), (+))
+    let tree2 = ParseTree(ParseTree(Value(4), Value(5), (*)), ParseTree(Value(4), Value(5), (*)), (+))
+    let tree3 = ParseTree(ParseTree(Value(4), Value(5), (*)), Value(3), (+))
+    calculateParseTree tree1 |> should equal 23
+    calculateParseTree tree2 |> should equal 40
+    calculateParseTree tree3 |> should equal 23
     
 
 [<Test>]
