@@ -23,8 +23,8 @@ let countEvenNumbersTest () =
     
 [<Test>]
 let mapTreeTest () =
-    let tree = Tree(5, Tree(2, Tip(4), Tip(3)), Tip(6))
-    mapTree (fun x -> x + 1) tree |> should equal (Tree(6, Tree(3, Tip(5), Tip(4)), Tip(7)))
+    let tree = Tree(5, Tree(2, Tip(4), Tip(3)), Tree(3, Tip(2), Tip(2)))
+    mapTree (fun x -> x + 1) tree |> should equal (Tree(6, Tree(3, Tip(5), Tip(4)), Tree(4, Tip(3), Tip(3))))
     
 [<Test>]
 let ParseTreeTest () =
