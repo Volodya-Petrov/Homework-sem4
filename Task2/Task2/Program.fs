@@ -13,13 +13,13 @@ let countEvenNumbers3 ls = ls |> List.map (fun x -> abs((x + 1) % 2)) |> List.su
 
 type Tree<'a> =
     | Tree of 'a * Tree<'a> * Tree<'a>
-    | Tip of 'a
+    | Empty
 
 /// Применяет полученные функцию ко всем элементам дерева и возвращает новое дерево
 let rec mapTree func tree =
     match tree with
     | Tree(value, left, right) -> Tree(func value, mapTree func left, mapTree func right)
-    | Tip(value) -> Tip(func value)
+    | Empty -> Empty
 
 type BinOperation<'a> = 'a -> 'a -> 'a
     
