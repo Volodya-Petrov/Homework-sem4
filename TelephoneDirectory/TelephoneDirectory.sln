@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TelephoneDirectory", "TelephoneDirectory\TelephoneDirectory.fsproj", "{5C2A5AE7-F156-4906-A5DE-B06BC5761899}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TestForTelephoneDirectory", "TestForTelephoneDirectory\TestForTelephoneDirectory.fsproj", "{20DE0237-302B-44E8-A025-FE69B19DDAF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5C2A5AE7-F156-4906-A5DE-B06BC5761899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C2A5AE7-F156-4906-A5DE-B06BC5761899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C2A5AE7-F156-4906-A5DE-B06BC5761899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DE0237-302B-44E8-A025-FE69B19DDAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20DE0237-302B-44E8-A025-FE69B19DDAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20DE0237-302B-44E8-A025-FE69B19DDAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20DE0237-302B-44E8-A025-FE69B19DDAF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -36,7 +36,7 @@ let PrintData directory =
     directory |> Seq.iter (fun (name, number) -> printfn "%s - %s" name number)
     
 let writeDataInFile (data:seq<string*string>) (path:string) =
-    use writer = new StreamWriter(path)
+    use writer = new StreamWriter(path, false)
     data
     |> Seq.map (fun (name, number) -> ($"{name} {number}"))
     |> Seq.iter writer.WriteLine

@@ -16,7 +16,7 @@ let rec program data =
         "
     let command = Console.ReadLine()
     match command with
-    | "0" -> printf "Выход"
+    | "0" -> printfn "Выход"
     | "1" ->
         printfn "Введите имя:"
         let name = Console.ReadLine()
@@ -57,4 +57,3 @@ let rec program data =
 program Seq.empty
 
 // For more information see https://aka.ms/fsharp-console-apps
-printfn "Hello from F#"
