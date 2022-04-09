@@ -1,12 +1,11 @@
 module TestsForPointFree
 
+open PointFree
 open NUnit.Framework
 open FsCheck
-open Program
 
 [<Test>]
 let CheckFunctionsForEquivalenceTest () =
     let equivalenceFunction x l =
-        let pointFree = pointFree'2 ()
-        withoutPointFree x l = pointFree x l
+        withoutPointFree x l = pointFree'2 x l
     Check.QuickThrowOnFailure equivalenceFunction
