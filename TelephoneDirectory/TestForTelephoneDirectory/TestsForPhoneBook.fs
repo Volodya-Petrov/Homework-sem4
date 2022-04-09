@@ -27,10 +27,10 @@ let testFindNumber () =
     
 [<Test>]
 let testReadFile () =
-    readDataFromFile "read.txt" |> should equal (seq{("lol", "444"); ("kek", "333")})
+    readDataFromFile "../../../read.txt" |> should equal (seq{("lol", "444"); ("kek", "333")})
     
 [<Test>]
 let testWriteFile () =
     let data = seq {("mike", "99999"); ("leva", "1337")}
-    writeDataInFile data "write.txt"
-    readDataFromFile "write.txt" |> should equal (seq {("mike", "99999"); ("leva", "1337")})
+    writeDataInFile data "../../../write.txt"
+    readDataFromFile "../../../write.txt" |> should equal (seq {("mike", "99999"); ("leva", "1337")})
