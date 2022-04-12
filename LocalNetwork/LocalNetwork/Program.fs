@@ -1,8 +1,8 @@
 module Program
 open LocalNetwork
 // For more information see https://aka.ms/fsharp-console-apps
-let linux = OS("Linux", 0.5f)
-let windows = OS("Windows", 0.7f)
+let linux = OS("Linux", 1f)
+let windows = OS("Windows", 1f)
 let comp1 = Computer(linux)
 let comp2 = Computer(linux)
 let comp3 = Computer(windows)

@@ -5,6 +5,12 @@ type public Network(matrix: bool[,], computers:Computer[]) =
     let computers = computers
     let visited = Array.create computers.Length false
     
+    let printState () =
+        seq {
+            for i in 0 .. computers.Length - 1 do
+                yield "Компьютер " + i.ToString() + (if computers[i].Infected then " заражен" else " не заражен")
+        }
+    
     let rec runDfs prev current =
         seq { 
         visited[current] <- true
@@ -13,8 +19,11 @@ type public Network(matrix: bool[,], computers:Computer[]) =
             if computers[current].Infected = false then
                 while (random.NextSingle() > computers[current].OS.ProbabilityInfection) do
                     yield ("Компьютеру " + prev.ToString() + " не удалось заразить компьютер " + current.ToString())
+                    yield! printState ()
+                computers[current].Infected <- true
                 yield  ("Компьютеру " + prev.ToString() + " заразил компьютер " + current.ToString())
-            computers[current].Infected <- true
+                yield! printState ()
+                
             for i in 0 .. visited.Length - 1 do
                 if i <> current && visited[i] = false && matrix[current, i] = true then
                     yield! (runDfs current i)
@@ -23,6 +32,7 @@ type public Network(matrix: bool[,], computers:Computer[]) =
         
     member public this.RunInfection () =
         seq {
+            yield! printState ()
             let mutable startIndex = -1 
             for i in 0 .. visited.Length - 1 do
                 if computers[i].Infected then
