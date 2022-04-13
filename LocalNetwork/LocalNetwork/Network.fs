@@ -5,6 +5,9 @@ type public Network(matrix: bool[,], computers:Computer[]) =
     let computers = computers
     let visited = Array.create computers.Length false
     
+    let mutable result : seq<string> = Seq.empty
+    let mutable counted = false
+    
     let printState () =
         seq {
             for i in 0 .. computers.Length - 1 do
@@ -19,25 +22,32 @@ type public Network(matrix: bool[,], computers:Computer[]) =
             if computers[current].Infected = false then
                 while (random.NextSingle() > computers[current].OS.ProbabilityInfection) do
                     yield ("Компьютеру " + prev.ToString() + " не удалось заразить компьютер " + current.ToString())
-                    yield! printState ()
                 computers[current].Infected <- true
-                yield  ("Компьютеру " + prev.ToString() + " заразил компьютер " + current.ToString())
-                yield! printState ()
+                yield  ("Компьютер " + prev.ToString() + " заразил компьютер " + current.ToString())
                 
             for i in 0 .. visited.Length - 1 do
                 if i <> current && visited[i] = false && matrix[current, i] = true then
-                    yield! (runDfs current i)
+                    for report in  (runDfs current i) -> report
         }         
     member public this.Computers with get() = computers
         
     member public this.RunInfection () =
-        seq {
-            yield! printState ()
+         seq {
             let mutable startIndex = -1 
             for i in 0 .. visited.Length - 1 do
                 if computers[i].Infected then
                     startIndex <- i
             if startIndex <> -1 then
-                yield! (runDfs startIndex startIndex)    
+                for report in (runDfs startIndex startIndex) -> report   
         }
         
+    member public this.RunInfectionOneStep () =
+        if counted = false then
+            result <- this.RunInfection()
+            counted <- true
+        if Seq.isEmpty result  then
+            "Network cant change state"
+        else
+            let message = Seq.head result
+            result <- Seq.tail result
+            message
