@@ -3,6 +3,7 @@ module TestForLocalNetwork
 open LocalNetwork
 open NUnit.Framework
 open FsUnit
+open Foq
 
 [<SetUp>]
 let Setup () =
@@ -36,4 +37,20 @@ let TestForNetworkWithProbability1 () =
     result.Length |> should equal answers.Length
     for i in 0 .. result.Length - 1 do
         answers[i] |> should equal result[i]
-        
+
+[<Test>]
+let TestWithMock () =
+    let randomizer = Mock<System.Random>()
+                         .Setup(fun x -> <@ x.NextSingle() @>)
+                         .Returns(0.7f)
+                         .Create()
+    let linux = OS("Linux", 0.8f)
+    let windows = OS("Windows", 0.5f)
+    let comp1 = Computer(linux)
+    comp1.Infected <- true
+    let comp2 = Computer(linux)
+    let comp3 = Computer(windows)
+    let matrix = [ [true; true; false]; [true; true; true]; [false; true; true] ]
+    let network = Network(array2D matrix, [| comp1; comp2; comp3;|], randomizer)
+    network.RunInfectionOneStep () |> should equal "Компьютер 0 заразил компьютер 1"
+    network.RunInfectionOneStep () |> should equal "Компьютеру 1 не удалось заразить компьютер 2"

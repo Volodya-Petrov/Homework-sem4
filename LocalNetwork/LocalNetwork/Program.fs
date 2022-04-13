@@ -10,5 +10,7 @@ let comp4 = Computer(windows)
 comp1.Infected <- true
 let matrix = [ [true; true; false; true]; [true; true; true; false]; [false; true; true; true]; [true; false; true; true] ]
 let network = Network(array2D matrix, [| comp1; comp2; comp3; comp4 |])
+let result = network.RunInfectionOneStep ()
+let result1 = network.RunInfectionOneStep ();
 (network.RunInfection()) |> Seq.iter (fun x -> printfn "%s" x)
 

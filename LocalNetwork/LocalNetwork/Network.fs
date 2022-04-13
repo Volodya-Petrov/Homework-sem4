@@ -1,24 +1,17 @@
 namespace LocalNetwork
 
-type public Network(matrix: bool[,], computers:Computer[]) =
+type public Network(matrix: bool[,], computers:Computer[], random:System.Random) =
     let matrix = matrix
+    let random = random
     let computers = computers
     let visited = Array.create computers.Length false
-    
     let mutable result : seq<string> = Seq.empty
-    let mutable counted = false
-    
-    let printState () =
-        seq {
-            for i in 0 .. computers.Length - 1 do
-                yield "Компьютер " + i.ToString() + (if computers[i].Infected then " заражен" else " не заражен")
-        }
-    
+    let mutable counted = false          
+   
     let rec runDfs prev current =
         seq { 
         visited[current] <- true
         if computers[current].OS.ProbabilityInfection <> 0f then
-            let random = System.Random()
             if computers[current].Infected = false then
                 while (random.NextSingle() > computers[current].OS.ProbabilityInfection) do
                     yield ("Компьютеру " + prev.ToString() + " не удалось заразить компьютер " + current.ToString())
@@ -28,7 +21,10 @@ type public Network(matrix: bool[,], computers:Computer[]) =
             for i in 0 .. visited.Length - 1 do
                 if i <> current && visited[i] = false && matrix[current, i] = true then
                     for report in  (runDfs current i) -> report
-        }         
+        }
+    
+    new (matrix: bool[,], computers:Computer[]) = Network(matrix, computers, System.Random())
+    
     member public this.Computers with get() = computers
         
     member public this.RunInfection () =
@@ -45,9 +41,5 @@ type public Network(matrix: bool[,], computers:Computer[]) =
         if counted = false then
             result <- this.RunInfection()
             counted <- true
-        if Seq.isEmpty result  then
-            "Network cant change state"
-        else
-            let message = Seq.head result
-            result <- Seq.tail result
-            message
+        Seq.head result
+        
