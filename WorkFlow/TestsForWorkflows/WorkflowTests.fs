@@ -33,3 +33,7 @@ let TestWithRoundCalculation() =
             return a / b
     }
     result |> should equal 0.048
+    
+[<Test>]
+let TestWithNegativeAccuracy() =
+    (fun () -> CalculateWithRoundBuilder(-1) |> ignore) |> should throw typeof<System.ArgumentException>

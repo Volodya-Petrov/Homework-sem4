@@ -4,10 +4,9 @@ open System
 
 type CalculateNumbersBuilder() =
     let convertStrToInt (s:string) =
-        let mutable x = int16 0
-        match Int16.TryParse(s, &x) with
-        | false -> None
-        | _ -> Some(int x)
+        match Int32.TryParse s with
+        | false, _ -> None
+        | _, x -> Some(x)
     
     member this.Bind(x, f) =
         let parsed = convertStrToInt x

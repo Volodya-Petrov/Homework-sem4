@@ -3,7 +3,8 @@ namespace WorkFlow
 open System
 
 type CalculateWithRoundBuilder(accuracy:int) =
-    let accuracy = accuracy
+    do
+        if accuracy < 0 then raise (System.ArgumentException("Передано отрицательное значение"))
     
     member this.Bind(x:float, f) =
         f (Math.Round(x, accuracy))
