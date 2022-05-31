@@ -1,6 +1,6 @@
 namespace LocalNetwork
 
-type public Network(matrix: bool[,], computers:Computer[], random:System.Random) =
+type public Network(matrix: bool[,], computers:Computer[], random:unit -> float32) =
     let matrix = matrix
     let random = random
     let computers = computers
@@ -13,19 +13,19 @@ type public Network(matrix: bool[,], computers:Computer[], random:System.Random)
         visited[current] <- true
         if computers[current].OS.ProbabilityInfection <> 0f then
             if computers[current].Infected = false then
-                while (random.NextSingle() > computers[current].OS.ProbabilityInfection) do
+                while (random () > computers[current].OS.ProbabilityInfection) do
                     yield ("Компьютеру " + prev.ToString() + " не удалось заразить компьютер " + current.ToString())
                 computers[current].Infected <- true
                 yield  ("Компьютер " + prev.ToString() + " заразил компьютер " + current.ToString())
                 
             for i in 0 .. visited.Length - 1 do
-                if i <> current && visited[i] = false && matrix[current, i] = true then
+                if i <> current && not visited[i] && matrix[current, i] then
                     for report in  (runDfs current i) -> report
         }
     
-    new (matrix: bool[,], computers:Computer[]) = Network(matrix, computers, System.Random())
+    new (matrix: bool[,], computers:Computer[]) = Network(matrix, computers, System.Random().NextSingle)
     
-    member public this.Computers with get() = computers
+    member public this.Computers = computers
         
     member public this.RunInfection () =
          seq {

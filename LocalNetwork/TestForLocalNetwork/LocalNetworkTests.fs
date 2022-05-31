@@ -34,16 +34,11 @@ let TestForNetworkWithProbability1 () =
     let network = Network(array2D matrix, [| comp1; comp2; comp3;|])
     let answers = [| "Компьютер 0 заразил компьютер 1"; "Компьютер 1 заразил компьютер 2" |]
     let result = Seq.toArray ( network.RunInfection ())
-    result.Length |> should equal answers.Length
-    for i in 0 .. result.Length - 1 do
-        answers[i] |> should equal result[i]
+    result |> should equal answers
 
 [<Test>]
 let TestWithMock () =
-    let randomizer = Mock<System.Random>()
-                         .Setup(fun x -> <@ x.NextSingle() @>)
-                         .Returns(0.7f)
-                         .Create()
+    let randomizer () = 0.7f 
     let linux = OS("Linux", 0.8f)
     let windows = OS("Windows", 0.5f)
     let comp1 = Computer(linux)
