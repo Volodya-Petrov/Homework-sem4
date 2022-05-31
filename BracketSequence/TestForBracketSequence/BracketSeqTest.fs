@@ -27,3 +27,7 @@ let testIncorrectCase2 () =
 [<Test>]
 let testIncorrectCase3 () =
     isBracketSequenceCorrect "([{}]))" |> should equal false
+    
+[<Test>]
+let testEmptyString () =
+    isBracketSequenceCorrect "" |> should equal true
